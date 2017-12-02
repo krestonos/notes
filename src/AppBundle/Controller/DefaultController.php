@@ -24,7 +24,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/add")
+     * @Route("/add", name="addNote")
      */
     public function addAction(Request $request)
     {
@@ -39,6 +39,9 @@ class DefaultController extends Controller
             $newNote->setText($formData['text']);
             $em->persist($newNote);
             $em->flush();
+            return $this->redirectToRoute('showNote',[
+                'id' => $newNote->getId()
+            ]);
         }
         return $this->render('@App/add.html.twig', [
             'form' => $form->createView(),
@@ -46,7 +49,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/show/{id}")
+     * @Route("/show/{id}", name="showNote")
      */
     public function showAction($id)
     {
