@@ -8,12 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class NotesController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="allNotes")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         $notesRepo = $em->getRepository(Note::class);
@@ -24,9 +25,9 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/add", name="addNote")
+     * @Route("/add", name="createNote")
      */
-    public function addAction(Request $request)
+    public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createFormBuilder()
@@ -38,6 +39,7 @@ class DefaultController extends Controller
             $formData = $form->getData();
             $newNote->setText($formData['text']);
             $em->persist($newNote);
+            $this->addFlash('success', "Notice successfully created");
             $em->flush();
             return $this->redirectToRoute('showNote',[
                 'id' => $newNote->getId()
@@ -56,10 +58,32 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $notesRepo = $em->getRepository(Note::class);
         $note = $notesRepo->find($id);
+        if (!$note) {
+            $this->addFlash('danger', "Not find notice #{$id}");
+            return $this->redirectToRoute('homepage');
+        }
         return $this->render('@App/show.html.twig', [
             'note' => $note,
         ]);
         
     
+    }
+    
+    /**
+     * @Route("/delete/{id}", name="deleteNote")
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $notesRepo = $em->getRepository(Note::class);
+        $note = $notesRepo->find($id);
+        if (!$note) {
+            $this->addFlash('danger', "Not find notice #{$id}");
+        } else {
+            $em->remove($note);
+            $this->addFlash('warning', "Notice #{$id} was deleted");
+            $em->flush();
+        }
+        return $this->redirectToRoute('allNotes');
     }
 }

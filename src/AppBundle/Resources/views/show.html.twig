@@ -10,6 +10,7 @@
             <td>{{note.getText}}</td>
         </tr>
     </table>
-    <a class="btn btn-primary" href="{{ path('homepage') }}">To all notes</a>
+    <a class="btn btn-primary" href="{{ path('allNotes') }}">To all notes</a>
+    <a class="btn btn-danger" href="{{ path('deleteNote', {'id': note.getId}) }}">Delete</a>
 {% endblock %}
 

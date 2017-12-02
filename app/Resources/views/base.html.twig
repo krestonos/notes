@@ -13,6 +13,16 @@
     <body>
     <div id="wrapper">
         <div id="container">
+            {% block notifications %}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-dismissable alert-{{ label }}">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endblock %}
             {% block body %}{% endblock %}
             {% block javascripts %}
                 <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
