@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Note text</th>
+        </tr>
+        <tr>
+            <td>{{note.getId}}</td>
+            <td>{{note.getText}}</td>
+        </tr>
+    </table>
+{% endblock %}
+
