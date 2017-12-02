@@ -21,6 +21,7 @@ class NotesController extends Controller
         $allNotes = $notesRepo->findAll();
         return $this->render('@App/index.html.twig', [
             'notes' => $allNotes,
+            'title' => 'All notes'
         ]);
     }
     
@@ -39,14 +40,15 @@ class NotesController extends Controller
             $formData = $form->getData();
             $newNote->setText($formData['text']);
             $em->persist($newNote);
-            $this->addFlash('success', "Notice successfully created");
+            $this->addFlash('success', "Note successfully created");
             $em->flush();
             return $this->redirectToRoute('showNote',[
-                'id' => $newNote->getId()
+                'id' => $newNote->getId(),
             ]);
         }
         return $this->render('@App/add.html.twig', [
             'form' => $form->createView(),
+            'title' => "Create note"
         ]);
     }
     
@@ -59,11 +61,12 @@ class NotesController extends Controller
         $notesRepo = $em->getRepository(Note::class);
         $note = $notesRepo->find($id);
         if (!$note) {
-            $this->addFlash('danger', "Not find notice #{$id}");
+            $this->addFlash('danger', "Can't find note #{$id}");
             return $this->redirectToRoute('homepage');
         }
         return $this->render('@App/show.html.twig', [
             'note' => $note,
+            'title' => "Note #{$id}"
         ]);
         
     
@@ -78,10 +81,10 @@ class NotesController extends Controller
         $notesRepo = $em->getRepository(Note::class);
         $note = $notesRepo->find($id);
         if (!$note) {
-            $this->addFlash('danger', "Not find notice #{$id}");
+            $this->addFlash('danger', "Can't find note #{$id}");
         } else {
             $em->remove($note);
-            $this->addFlash('warning', "Notice #{$id} was deleted");
+            $this->addFlash('warning', "Note #{$id} was deleted");
             $em->flush();
         }
         return $this->redirectToRoute('allNotes');
