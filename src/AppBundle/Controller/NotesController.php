@@ -62,7 +62,7 @@ class NotesController extends Controller
         $note = $notesRepo->find($id);
         if (!$note) {
             $this->addFlash('danger', "Can't find note #{$id}");
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('allNotes');
         }
         return $this->render('@App/show.html.twig', [
             'note' => $note,

@@ -3,11 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>{{ projectName }}|{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}" />
-            <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.min.css')}}" />
-            <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet"/>
-        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.min.css')}}" />
+        <link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet"/>
+        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -24,10 +23,9 @@
                 {% endfor %}
             {% endblock %}
             {% block body %}{% endblock %}
-            {% block javascripts %}
-                <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
-                <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
-            {% endblock %}
+            <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
+            <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+            {% block javascripts %}{% endblock %}
         </div>
     </div>
     </body>
