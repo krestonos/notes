@@ -16,7 +16,7 @@
                 </td>
                 <td>
                     <a class="btn btn-default" href="{{ path('showNote', {'id': note.getId}) }}">View Note</a>
-                    <a class="btn btn-danger" href="{{ path('deleteNote', {'id': note.getId}) }}">Delete</a>
+                    <a class="btn btn-danger" onclick="confirmDelete()" href="{{ path('deleteNote', {'id': note.getId}) }}">Delete</a>
                 </td>
             </tr>
         {% endfor %}

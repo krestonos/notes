@@ -27,6 +27,13 @@ class Note
      * @ORM\Column(name="text", type="string", length=255)
      */
     private $text;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isDeleted", type="boolean", nullable=false)
+     */
+    private $isDeleted = false;
 
 
     /**
@@ -62,5 +69,24 @@ class Note
     {
         return $this->text;
     }
+    
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return $this->isDeleted;
+    }
+    
+    public function deleteNote()
+    {
+        $this->isDeleted = true;
+    }
+    
+    public function restoreNote()
+    {
+        $this->isDeleted = false;
+    }
+
 }
 
